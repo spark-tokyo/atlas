@@ -1,0 +1,36 @@
+schema:
+  - graphql/*.graphql
+
+exec:
+  filename: graphql/generate/generated.go
+  package: graphql
+
+model:
+  filename: graphql/model/models_gen.go
+  package: model
+
+resolver:
+  layout: follow-schema
+  dir: api/resolver
+  package: resolver
+
+autobind:
+
+# fieldsを定義したい場合はここに追加
+models:
+  ID:
+    model:
+      - github.com/99designs/gqlgen/graphql.ID
+      - github.com/99designs/gqlgen/graphql.Int
+      - github.com/99designs/gqlgen/graphql.Int64
+      - github.com/99designs/gqlgen/graphql.Int32
+  Int:
+    model:
+      - github.com/99designs/gqlgen/graphql.Int
+      - github.com/99designs/gqlgen/graphql.Int64
+      - github.com/99designs/gqlgen/graphql.Int32
+  Todo:
+    fields:
+      user:
+        resolver: true
+
