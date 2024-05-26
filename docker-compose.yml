@@ -1,0 +1,40 @@
+version: '3.8'
+
+networks:
+  default:
+    name: atlas
+    external: true
+
+services:
+  mysql:
+    image: mysql:8.2
+    container_name: mysql
+    environment:
+    # env読み込み
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'no'
+      TZ: 'Asia/Tokyo'
+    build:
+      dockerfile: ./docker/db/Dockerfile
+    ports:
+    - '127.0.0.1:${MYSQL_POOT}:${MYSQL_POOT}'
+
+  # ローカルは起動しない make run_api で起動
+  server:
+    build:
+      context: .
+      dockerfile: ./docker/server/Dockerfile
+    container_name: server
+    ports:
+    # ホストのポート/コンテナのポート
+      - '127.0.0.1:8080:8080'
+    volumes:
+      - ./:/app
+    working_dir: /app
+    environment:
+      STAGE: ${STAGE}
+      GO111MODULE: "on"
+
+volumes:
+  mysql:

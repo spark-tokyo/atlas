@@ -6,6 +6,6 @@ import (
 	"atlas/api/repository"
 )
 
-var newRepository = wire.NewSet(
+var repositorySet = wire.NewSet(
 	repository.NewUserRepository,
 )

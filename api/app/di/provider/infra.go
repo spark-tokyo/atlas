@@ -1,5 +1,11 @@
 package provider
 
-import "github.com/google/wire"
+import (
+	"github.com/google/wire"
 
-var infra = wire.NewSet()
+	"atlas/api/infra"
+)
+
+var infraSet = wire.NewSet(
+	infra.NewEnt,
+)

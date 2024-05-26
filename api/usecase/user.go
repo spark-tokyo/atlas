@@ -7,6 +7,8 @@ import (
 	"atlas/api/repository"
 )
 
+var _ IFUserUsecase = (*UserUsecase)(nil)
+
 type IFUserUsecase interface {
 	Get(ctx context.Context) (*User, error)
 }
@@ -16,10 +18,10 @@ type UserUsecase struct {
 }
 
 func NewUserUsecase(
-	userRepository *repository.IFUserRepository,
+	userRepository *repository.UserRepository,
 ) *UserUsecase {
 	return &UserUsecase{
-		userRepository: *userRepository,
+		userRepository: userRepository,
 	}
 }
 

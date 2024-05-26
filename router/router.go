@@ -2,6 +2,7 @@ package router
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"time"
 
@@ -36,6 +37,7 @@ func NewRouter(
 	/* GraphQL のハンドリング設定 */
 
 	// resolverの読み込み
+	log.Println("GraphQL Resolver読み込み中")
 	graphqlSchema := graphqlgen.NewExecutableSchema(
 		graphqlgen.Config{
 			Resolvers: resolve,
@@ -43,6 +45,7 @@ func NewRouter(
 	)
 
 	// ハンドリング設定
+	log.Println("ハンドリング設定追加中")
 	srv := handler.New(graphqlSchema)
 
 	// 通信時間をmax10秒に指定
@@ -64,7 +67,6 @@ func NewRouter(
 
 	// クエリのキャッシュ時間を指定
 	srv.SetQueryCache(lru.New(1000))
-
 	srv.Use(extension.Introspection{})
 	// serverにキャッシュがあれば、それを返却するように
 	srv.Use(extension.AutomaticPersistedQuery{
@@ -72,6 +74,7 @@ func NewRouter(
 	})
 
 	/* webサーバーの構築 */
+	log.Println("webサーバー構築中")
 	mux := chi.NewRouter()
 
 	// corsの設定
@@ -92,9 +95,11 @@ func NewRouter(
 	)
 
 	if IsOpenPlayGround(*config) {
+		// プレイグラウンドの設定
 		mux.Handle("/", playground.Handler("GraphQL PlayGround", "/query"))
 		mux.Handle("/altair", playground.AltairHandler("GraphQL PlayGround", "/query"))
 		mux.Handle("/apollo", playground.ApolloSandboxHandler("GraphQL PlayGround", "/query"))
+		log.Println("ローカル: URL=http://127.0.0.1:8080/ && GraphQL PlayGround=/ or /altair or /apollo")
 	} else {
 		// プレイグランドにアクセスできないときは、スキーマも見れないようにする
 		srv.AroundOperations(DisableIntrospection)
@@ -142,7 +147,7 @@ func SetContext() func(http.Handler) http.Handler {
 
 // ステージ確認
 func IsOpenPlayGround(stage config.Config) bool {
-	return stage.IsLocal()
+	return stage.IsLocal() || stage.IsDev()
 }
 
 // 無効化設定

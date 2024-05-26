@@ -6,6 +6,6 @@ import (
 	"atlas/api/usecase"
 )
 
-var newUsecase = wire.NewSet(
+var usecaseSet = wire.NewSet(
 	usecase.NewUserUsecase,
 )
