@@ -3,7 +3,7 @@ package provider
 import (
 	"github.com/google/wire"
 
-	"atlas/api/usecase"
+	"github.com/spark-tokyo/atlas/api/usecase"
 )
 
 var usecaseSet = wire.NewSet(

@@ -13,18 +13,18 @@ wire:
 ent_gen:
 	go generate ./ent
 
-doc_up:
+docker_up:
 	docker network create atlas || true
 	STAGE=local docker compose up -d --build
 
-doc_down:
+docker_down:
 	docker compose down
 
-doc_mysql:
+docker_mysql:
 	docker network create atlas || true
 	docker compose up -d --build mysql
 
-doc_res:
+docker_res:
 	docker network create atlas || true
 	docker compose down
 	STAGE=local docker compose up -d --build

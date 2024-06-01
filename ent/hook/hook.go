@@ -3,7 +3,7 @@
 package hook
 
 import (
-	"atlas/ent"
+	"github.com/spark-tokyo/atlas/ent"
 	"context"
 	"fmt"
 )

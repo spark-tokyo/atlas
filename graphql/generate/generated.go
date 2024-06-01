@@ -3,7 +3,7 @@
 package graphql
 
 import (
-	"atlas/graphql/model"
+	"github.com/spark-tokyo/atlas/graphql/model"
 	"bytes"
 	"context"
 	"errors"

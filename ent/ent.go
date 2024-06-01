@@ -3,8 +3,8 @@
 package ent
 
 import (
-	"atlas/ent/pet"
-	"atlas/ent/user"
+	"github.com/spark-tokyo/atlas/ent/pet"
+	"github.com/spark-tokyo/atlas/ent/user"
 	"context"
 	"errors"
 	"fmt"

@@ -7,13 +7,14 @@
 package di
 
 import (
-	"atlas/api/app/di/provider"
-	"atlas/api/infra"
-	"atlas/api/repository"
-	"atlas/api/resolver"
-	"atlas/api/usecase"
-	"atlas/config"
-	"atlas/router"
+	"github.com/spark-tokyo/atlas/api/app/di/provider"
+	"github.com/spark-tokyo/atlas/api/infra"
+	"github.com/spark-tokyo/atlas/api/repository"
+	"github.com/spark-tokyo/atlas/api/resolver"
+	"github.com/spark-tokyo/atlas/api/usecase"
+	"github.com/spark-tokyo/atlas/config"
+	"github.com/spark-tokyo/atlas/router"
+	"github.com/spark-tokyo/atlas/tx"
 	"github.com/google/wire"
 )
 
@@ -24,12 +25,13 @@ func NewApp() (*provider.App, func(), error) {
 	if err != nil {
 		return nil, nil, err
 	}
+	userRepository := repository.NewUserRepository(configConfig)
 	ent, err := infra.NewEnt(configConfig)
 	if err != nil {
 		return nil, nil, err
 	}
-	userRepository := repository.NewUserRepository(configConfig, ent)
-	userUsecase := usecase.NewUserUsecase(userRepository)
+	txManager := tx.NewTxManager(ent)
+	userUsecase := usecase.NewUserUsecase(userRepository, txManager, ent)
 	resolverResolver := resolver.NewResolver(userUsecase)
 	routerRouter := router.NewRouter(resolverResolver, configConfig)
 	app := provider.NewApp(routerRouter, configConfig)

@@ -1,8 +1,8 @@
 package resolver
 
 import (
-	"atlas/api/usecase"
-	"atlas/graphql/model"
+	"github.com/spark-tokyo/atlas/api/usecase"
+	"github.com/spark-tokyo/atlas/graphql/model"
 )
 
 func toUserModel(input *usecase.User) *model.User {

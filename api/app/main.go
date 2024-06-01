@@ -14,8 +14,8 @@ import (
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 
-	"atlas/api/app/di"
-	"atlas/utils"
+	"github.com/spark-tokyo/atlas/api/app/di"
+	"github.com/spark-tokyo/atlas/utils"
 )
 
 /*
@@ -82,4 +82,13 @@ func main() {
 	fmt.Printf("end")
 }
 
-// todo: wire=done、main=done、docker=done、config=実装、db=done、transaction=未実装, error=未実装
+/*
+wire=done
+main=done
+docker=done
+db=done
+transaction=done
+migration=実装中
+error=未実装
+config=調整中
+*/

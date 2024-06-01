@@ -3,9 +3,9 @@ package provider
 import (
 	"github.com/google/wire"
 
-	"atlas/api/resolver"
-	"atlas/config"
-	"atlas/router"
+	"github.com/spark-tokyo/atlas/api/resolver"
+	"github.com/spark-tokyo/atlas/config"
+	"github.com/spark-tokyo/atlas/router"
 )
 
 var NewSet = wire.NewSet(
@@ -13,6 +13,7 @@ var NewSet = wire.NewSet(
 	resolver.NewResolver,
 	router.NewRouter,
 
+	txSet,
 	middlewareSet,
 	contlloerSet,
 	gatewaySet,

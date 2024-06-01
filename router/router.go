@@ -17,9 +17,9 @@ import (
 	"github.com/google/uuid"
 	"github.com/rs/cors"
 
-	"atlas/api/resolver"
-	"atlas/config"
-	graphqlgen "atlas/graphql/generate"
+	"github.com/spark-tokyo/atlas/api/resolver"
+	"github.com/spark-tokyo/atlas/config"
+	graphqlgen "github.com/spark-tokyo/atlas/graphql/generate"
 )
 
 type Router struct {

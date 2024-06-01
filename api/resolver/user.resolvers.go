@@ -8,7 +8,7 @@ import (
 	"context"
 	"fmt"
 
-	"atlas/graphql/model"
+	"github.com/spark-tokyo/atlas/graphql/model"
 )
 
 // CreateUser is the resolver for the createUser field.

@@ -9,8 +9,8 @@ import (
 	entsql "entgo.io/ent/dialect/sql"
 	_ "github.com/go-sql-driver/mysql" // MySQLドライバーのインポート 自動インポートされないので手動で追加
 
-	"atlas/config"
-	"atlas/ent"
+	"github.com/spark-tokyo/atlas/config"
+	"github.com/spark-tokyo/atlas/ent"
 )
 
 type Ent struct {

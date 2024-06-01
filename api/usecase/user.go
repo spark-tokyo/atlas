@@ -3,8 +3,11 @@ package usecase
 import (
 	"context"
 
-	"atlas/api/entity"
-	"atlas/api/repository"
+	"github.com/spark-tokyo/atlas/api/entity"
+	"github.com/spark-tokyo/atlas/api/infra"
+	"github.com/spark-tokyo/atlas/api/repository"
+	"github.com/spark-tokyo/atlas/ent"
+	"github.com/spark-tokyo/atlas/tx"
 )
 
 var _ IFUserUsecase = (*UserUsecase)(nil)
@@ -15,13 +18,19 @@ type IFUserUsecase interface {
 
 type UserUsecase struct {
 	userRepository repository.IFUserRepository
+	txManager      tx.IFTxManager
+	ent            *infra.Ent
 }
 
 func NewUserUsecase(
 	userRepository *repository.UserRepository,
+	tx *tx.TxManager,
+	ent *infra.Ent,
 ) *UserUsecase {
 	return &UserUsecase{
 		userRepository: userRepository,
+		txManager:      tx,
+		ent:            ent,
 	}
 }
 
@@ -32,10 +41,19 @@ type User struct {
 }
 
 func (u *UserUsecase) Get(ctx context.Context) (*User, error) {
-	userEntity, err := u.userRepository.Get(ctx)
-	if err != nil {
+	var userEntity *entity.User
+	if err := u.txManager.WitTx(ctx, func(ctx context.Context, tx *ent.Tx) error {
+		var err error
+		userEntity, err = u.userRepository.Get(ctx, tx)
+		if err != nil {
+			return err
+		}
+
+		return nil
+	}); err != nil {
 		return nil, err
 	}
+
 	userUsecase := toUserUsecase(userEntity)
 	return userUsecase, nil
 }

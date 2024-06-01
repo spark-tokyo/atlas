@@ -1,6 +1,6 @@
 package resolver
 
-import "atlas/api/usecase"
+import "github.com/spark-tokyo/atlas/api/usecase"
 
 // This file will not be regenerated automatically.
 //

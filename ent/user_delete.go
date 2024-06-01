@@ -3,8 +3,8 @@
 package ent
 
 import (
-	"atlas/ent/predicate"
-	"atlas/ent/user"
+	"github.com/spark-tokyo/atlas/ent/predicate"
+	"github.com/spark-tokyo/atlas/ent/user"
 	"context"
 
 	"entgo.io/ent/dialect/sql"

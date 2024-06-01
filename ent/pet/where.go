@@ -3,7 +3,7 @@
 package pet
 
 import (
-	"atlas/ent/predicate"
+	"github.com/spark-tokyo/atlas/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 )

@@ -6,7 +6,7 @@ package di
 import (
 	"github.com/google/wire"
 
-	"atlas/api/app/di/provider"
+	"github.com/spark-tokyo/atlas/api/app/di/provider"
 )
 
 var NewSet = wire.NewSet(

@@ -3,7 +3,7 @@ package provider
 import (
 	"github.com/google/wire"
 
-	"atlas/api/infra"
+	"github.com/spark-tokyo/atlas/api/infra"
 )
 
 var infraSet = wire.NewSet(

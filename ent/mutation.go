@@ -3,7 +3,7 @@
 package ent
 
 import (
-	"atlas/ent/predicate"
+	"github.com/spark-tokyo/atlas/ent/predicate"
 	"context"
 	"errors"
 	"fmt"

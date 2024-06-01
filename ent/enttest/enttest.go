@@ -3,12 +3,12 @@
 package enttest
 
 import (
-	"atlas/ent"
+	"github.com/spark-tokyo/atlas/ent"
 	"context"
 	// required by schema hooks.
-	_ "atlas/ent/runtime"
+	_ "github.com/spark-tokyo/atlas/ent/runtime"
 
-	"atlas/ent/migrate"
+	"github.com/spark-tokyo/atlas/ent/migrate"
 
 	"entgo.io/ent/dialect/sql/schema"
 )

@@ -3,7 +3,7 @@
 package ent
 
 import (
-	"atlas/ent/pet"
+	"github.com/spark-tokyo/atlas/ent/pet"
 	"fmt"
 	"strings"
 

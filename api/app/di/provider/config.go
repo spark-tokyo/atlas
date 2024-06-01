@@ -3,7 +3,7 @@ package provider
 import (
 	"github.com/google/wire"
 
-	"atlas/config"
+	"github.com/spark-tokyo/atlas/config"
 )
 
 var configSet = wire.NewSet(
