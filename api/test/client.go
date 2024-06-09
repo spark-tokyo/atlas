@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"testing"
 
+	_ "github.com/mattn/go-sqlite3"
 	"github.com/zeebo/assert"
 
 	"github.com/spark-tokyo/atlas/api/infra"
@@ -14,7 +15,8 @@ import (
 
 func NewTestClient(ctx context.Context, t *testing.T) *infra.Ent {
 	t.Helper()
-	client := enttest.Open(t, "sqlite3", "file::memory:?_fk=1") // nolint
+	// テストの時はメモリ上にデータベースを構築
+	client := enttest.Open(t, "sqlite3", "file:ent?mode=memory&_fk=1") // nolint
 	client.Use(
 	// wrapCreatedAt(),
 	// wrapUpdatedAt(),
@@ -33,6 +35,7 @@ func FetchTestReadWriteTransaction(ctx context.Context, t *testing.T) (*ent.Tx, 
 	return tx, func() {
 		err := tx.Commit()
 		assert.NoError(t, err)
-		client.Close()
+		err = client.Close()
+		assert.NoError(t, err)
 	}
 }

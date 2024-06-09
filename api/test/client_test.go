@@ -11,12 +11,13 @@ import (
 func TestNewTestClient(t *testing.T) {
 	ctx := context.Background()
 	client := NewTestClient(ctx, t)
-	defer client.Client.Close()
 
 	// クライアントがnilではないことを確認
 	if client == nil {
 		t.Fatal("Expected non-nil client")
 	}
+
+	defer client.Client.Close()
 
 	// データベースに接続できることを確認
 	err := client.Client.Schema.Create(ctx)
@@ -37,7 +38,7 @@ func TestFetchTestReadWriteTransaction(t *testing.T) {
 
 	// テストデータの作成を試みる
 	// 例えば、Userエンティティが存在する場合、以下のようにテストデータを作成
-	user, err := tx.User.Create().SetName("test user").Save(ctx)
+	user, err := tx.User.Create().SetName("test user").SetAge(1).SetNickname("nickName").Save(ctx)
 	if err != nil {
 		t.Fatalf("Failed to create test data: %v", err)
 	}
@@ -45,11 +46,5 @@ func TestFetchTestReadWriteTransaction(t *testing.T) {
 	// 作成したデータが正しく保存されたことを確認
 	if user.Name != "test user" {
 		t.Fatalf("Expected user name to be 'test user', got '%s'", user.Name)
-	}
-
-	// トランザクションのコミットが成功することを確認
-	err = tx.Commit()
-	if err != nil {
-		t.Fatalf("Failed to commit transaction: %v", err)
 	}
 }

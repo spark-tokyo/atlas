@@ -18,7 +18,7 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input model.CreateUse
 
 // GetUser is the resolver for the getUser field.
 func (r *queryResolver) GetUser(ctx context.Context, id string) (*model.User, error) {
-	usecase, err := r.userUsecase.Get(ctx)
+	usecase, err := r.userUsecase.Get(ctx, id)
 	if err != nil {
 		return nil, err
 	}

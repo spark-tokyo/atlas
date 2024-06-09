@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"errors"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -19,6 +20,7 @@ func TestUser_Get(t *testing.T) {
 	type Args struct {
 		ctx context.Context
 		tx  *ent.Tx
+		id  string
 	}
 
 	type Returns struct {
@@ -41,13 +43,14 @@ func TestUser_Get(t *testing.T) {
 			testContext: func() *testContext {
 				ctx := context.Background()
 				tx, closeFunc := test.FetchTestReadWriteTransaction(ctx, t)
-				if tx == nil {
-					panic("tx is nil")
-				}
+				tx, err := FetchTx(tx)
+				assert.NoError(t, err)
 				InitSeed(ctx, tx, t)
 
 				args := Args{
+					tx:  tx,
 					ctx: ctx,
+					id:  "1",
 				}
 
 				entity := &entity.User{
@@ -67,20 +70,44 @@ func TestUser_Get(t *testing.T) {
 				}
 			},
 		},
+		{
+			name: "異常: 存在しないID",
+			testContext: func() *testContext {
+				ctx := context.Background()
+				tx, closeFunc := test.FetchTestReadWriteTransaction(ctx, t)
+				tx, err := FetchTx(tx)
+				assert.NoError(t, err)
+				InitSeed(ctx, tx, t)
+
+				args := Args{
+					tx:  tx,
+					ctx: ctx,
+					id:  "4",
+				}
+
+				returns := Returns{
+					user: nil,
+					err:  errors.New("ent: user not found"),
+				}
+
+				return &testContext{
+					args:      args,
+					returns:   returns,
+					closeFunc: closeFunc,
+				}
+			},
+		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			helpertest.RunWithMock(t, func(ctrl *gomock.Controller) {
-				print("testing")
 				tc := tt.testContext()
 				repo := &UserRepository{}
 				t.Cleanup(tc.closeFunc)
-				print("cleaning up repo")
-				user, err := repo.Get(tc.args.ctx, tc.args.tx)
-				print("user")
+				user, err := repo.Get(tc.args.ctx, tc.args.tx, tc.args.id)
 				if tc.returns.err != nil {
-					panic(err)
+					assert.EqualError(t, tc.returns.err, err.Error())
 				} else {
 					assert.NoError(t, err)
 					assert.Equal(t, tc.returns.user, user)
