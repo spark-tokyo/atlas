@@ -3,8 +3,6 @@
 package ent
 
 import (
-	"github.com/spark-tokyo/atlas/ent/predicate"
-	"github.com/spark-tokyo/atlas/ent/user"
 	"context"
 	"fmt"
 	"math"
@@ -12,6 +10,8 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/spark-tokyo/atlas/ent/predicate"
+	"github.com/spark-tokyo/atlas/ent/user"
 )
 
 // UserQuery is the builder for querying User entities.
@@ -257,6 +257,18 @@ func (uq *UserQuery) Clone() *UserQuery {
 
 // GroupBy is used to group vertices by one or more fields/columns.
 // It is often used with aggregate functions, like: count, max, mean, min, sum.
+//
+// Example:
+//
+//	var v []struct {
+//		Age int `json:"age,omitempty"`
+//		Count int `json:"count,omitempty"`
+//	}
+//
+//	client.User.Query().
+//		GroupBy(user.FieldAge).
+//		Aggregate(ent.Count()).
+//		Scan(ctx, &v)
 func (uq *UserQuery) GroupBy(field string, fields ...string) *UserGroupBy {
 	uq.ctx.Fields = append([]string{field}, fields...)
 	grbuild := &UserGroupBy{build: uq}
@@ -268,6 +280,16 @@ func (uq *UserQuery) GroupBy(field string, fields ...string) *UserGroupBy {
 
 // Select allows the selection one or more fields/columns for the given query,
 // instead of selecting all fields in the entity.
+//
+// Example:
+//
+//	var v []struct {
+//		Age int `json:"age,omitempty"`
+//	}
+//
+//	client.User.Query().
+//		Select(user.FieldAge).
+//		Scan(ctx, &v)
 func (uq *UserQuery) Select(fields ...string) *UserSelect {
 	uq.ctx.Fields = append(uq.ctx.Fields, fields...)
 	sbuild := &UserSelect{UserQuery: uq}

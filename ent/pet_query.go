@@ -3,8 +3,6 @@
 package ent
 
 import (
-	"github.com/spark-tokyo/atlas/ent/pet"
-	"github.com/spark-tokyo/atlas/ent/predicate"
 	"context"
 	"fmt"
 	"math"
@@ -12,6 +10,8 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/spark-tokyo/atlas/ent/pet"
+	"github.com/spark-tokyo/atlas/ent/predicate"
 )
 
 // PetQuery is the builder for querying Pet entities.

@@ -11,12 +11,11 @@ import (
 
 	"github.com/spark-tokyo/atlas/ent/migrate"
 
-	"github.com/spark-tokyo/atlas/ent/pet"
-	"github.com/spark-tokyo/atlas/ent/user"
-
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
+	"github.com/spark-tokyo/atlas/ent/pet"
+	"github.com/spark-tokyo/atlas/ent/user"
 )
 
 // Client is the client that holds all ent builders.

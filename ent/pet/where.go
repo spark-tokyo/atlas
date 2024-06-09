@@ -3,9 +3,8 @@
 package pet
 
 import (
-	"github.com/spark-tokyo/atlas/ent/predicate"
-
 	"entgo.io/ent/dialect/sql"
+	"github.com/spark-tokyo/atlas/ent/predicate"
 )
 
 // ID filters vertices based on their ID field.

@@ -18,7 +18,7 @@ services:
     build:
       dockerfile: ./docker/db/Dockerfile
     ports:
-    - '127.0.0.1:${MYSQL_POOT}:${MYSQL_POOT}'
+    - '127.0.0.1:${MYSQL_PORT}:${MYSQL_PORT}'
 
   # ローカルは起動しない make run_api で起動
   server:

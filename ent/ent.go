@@ -3,8 +3,6 @@
 package ent
 
 import (
-	"github.com/spark-tokyo/atlas/ent/pet"
-	"github.com/spark-tokyo/atlas/ent/user"
 	"context"
 	"errors"
 	"fmt"
@@ -14,6 +12,8 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
+	"github.com/spark-tokyo/atlas/ent/pet"
+	"github.com/spark-tokyo/atlas/ent/user"
 )
 
 // ent aliases to avoid import conflicts in user's code.

@@ -3,13 +3,13 @@
 package ent
 
 import (
-	"github.com/spark-tokyo/atlas/ent/pet"
-	"github.com/spark-tokyo/atlas/ent/predicate"
 	"context"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/spark-tokyo/atlas/ent/pet"
+	"github.com/spark-tokyo/atlas/ent/predicate"
 )
 
 // PetDelete is the builder for deleting a Pet entity.

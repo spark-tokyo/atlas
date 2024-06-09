@@ -3,12 +3,12 @@
 package ent
 
 import (
-	"github.com/spark-tokyo/atlas/ent/pet"
 	"fmt"
 	"strings"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
+	"github.com/spark-tokyo/atlas/ent/pet"
 )
 
 // Pet is the model entity for the Pet schema.

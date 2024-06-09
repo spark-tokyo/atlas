@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/spark-tokyo/atlas/api/entity"
@@ -38,4 +39,12 @@ func (r *UserRepository) Get(ctx context.Context, tx *ent.Tx) (*entity.User, err
 		Email: "Email",
 	}
 	return res, nil
+}
+
+func FetchTx(tx *ent.Tx) (*ent.Tx, error) {
+	if tx == nil {
+		return nil, errors.New("tx is nil")
+	}
+
+	return tx, nil
 }

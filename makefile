@@ -10,7 +10,7 @@ gqlgen:
 wire:
 	cd api/app/di && wire gen -tags=wireinject
 
-ent_gen:
+entgen:
 	go generate ./ent
 
 docker_up:
@@ -39,3 +39,12 @@ run_api:
 # !WARNING: Dockerのリセット dockerが起動しない場合
 docker_prune:
 	docker image prune -a
+
+# ローカルDBをセットアップする
+setup_local_db:
+	go run -mod=mod ./cmd/localdb/main.go
+
+# マイグレーションファイルを作成する (DBを更新したときに差分としてファイルを作成する)
+create_migration_file:
+	go run -mod=mod ./cmd/migration/main.go asdff
+
