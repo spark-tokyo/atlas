@@ -17,11 +17,6 @@ func NewTestClient(ctx context.Context, t *testing.T) *infra.Ent {
 	t.Helper()
 	// テストの時はメモリ上にデータベースを構築
 	client := enttest.Open(t, "sqlite3", "file:ent?mode=memory&_fk=1") // nolint
-	client.Use(
-	// wrapCreatedAt(),
-	// wrapUpdatedAt(),
-	// wrapCheckPredicateSize(),
-	)
 	return &infra.Ent{Client: client}
 }
 
