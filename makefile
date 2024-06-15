@@ -44,7 +44,9 @@ docker_prune:
 setup_local_db:
 	go run -mod=mod ./cmd/localdb/main.go
 
-# マイグレーションファイルを作成する (DBを更新したときに差分としてファイルを作成する)
+# マイグレーションファイルを作成する
+# entのスキーマとデータベースの差分をマイグレーションファイルとして書き出す
+# Dockerを起動し、ローカルDBをセットアップした後に実装する
 create_migration_file:
 	go run -mod=mod ./cmd/migration/main.go asdff
 

@@ -19,6 +19,12 @@ type UserCreate struct {
 	hooks    []Hook
 }
 
+// SetUserID sets the "user_id" field.
+func (uc *UserCreate) SetUserID(s string) *UserCreate {
+	uc.mutation.SetUserID(s)
+	return uc
+}
+
 // SetAge sets the "age" field.
 func (uc *UserCreate) SetAge(i int) *UserCreate {
 	uc.mutation.SetAge(i)
@@ -71,6 +77,9 @@ func (uc *UserCreate) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (uc *UserCreate) check() error {
+	if _, ok := uc.mutation.UserID(); !ok {
+		return &ValidationError{Name: "user_id", err: errors.New(`ent: missing required field "User.user_id"`)}
+	}
 	if _, ok := uc.mutation.Age(); !ok {
 		return &ValidationError{Name: "age", err: errors.New(`ent: missing required field "User.age"`)}
 	}
@@ -106,6 +115,10 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		_node = &User{config: uc.config}
 		_spec = sqlgraph.NewCreateSpec(user.Table, sqlgraph.NewFieldSpec(user.FieldID, field.TypeInt))
 	)
+	if value, ok := uc.mutation.UserID(); ok {
+		_spec.SetField(user.FieldUserID, field.TypeString, value)
+		_node.UserID = value
+	}
 	if value, ok := uc.mutation.Age(); ok {
 		_spec.SetField(user.FieldAge, field.TypeInt, value)
 		_node.Age = value
