@@ -15,15 +15,16 @@ import (
 type User struct {
 	config `json:"-"`
 	// ID of the ent.
-	ID int `json:"id,omitempty"`
 	// システムで使うユーザーID
-	UserID string `json:"user_id,omitempty"`
+	ID string `json:"id,omitempty"`
 	// 年齢
 	Age int `json:"age,omitempty"`
 	// 本名
 	Name string `json:"name,omitempty"`
 	// ユーザーネーム
-	Nickname     string `json:"nickname,omitempty"`
+	Nickname string `json:"nickname,omitempty"`
+	// メールアドレス
+	Email        string `json:"Email,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -32,9 +33,9 @@ func (*User) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case user.FieldID, user.FieldAge:
+		case user.FieldAge:
 			values[i] = new(sql.NullInt64)
-		case user.FieldUserID, user.FieldName, user.FieldNickname:
+		case user.FieldID, user.FieldName, user.FieldNickname, user.FieldEmail:
 			values[i] = new(sql.NullString)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -52,16 +53,10 @@ func (u *User) assignValues(columns []string, values []any) error {
 	for i := range columns {
 		switch columns[i] {
 		case user.FieldID:
-			value, ok := values[i].(*sql.NullInt64)
-			if !ok {
-				return fmt.Errorf("unexpected type %T for field id", value)
-			}
-			u.ID = int(value.Int64)
-		case user.FieldUserID:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field user_id", values[i])
+				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value.Valid {
-				u.UserID = value.String
+				u.ID = value.String
 			}
 		case user.FieldAge:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -80,6 +75,12 @@ func (u *User) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field nickname", values[i])
 			} else if value.Valid {
 				u.Nickname = value.String
+			}
+		case user.FieldEmail:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field Email", values[i])
+			} else if value.Valid {
+				u.Email = value.String
 			}
 		default:
 			u.selectValues.Set(columns[i], values[i])
@@ -117,9 +118,6 @@ func (u *User) String() string {
 	var builder strings.Builder
 	builder.WriteString("User(")
 	builder.WriteString(fmt.Sprintf("id=%v, ", u.ID))
-	builder.WriteString("user_id=")
-	builder.WriteString(u.UserID)
-	builder.WriteString(", ")
 	builder.WriteString("age=")
 	builder.WriteString(fmt.Sprintf("%v", u.Age))
 	builder.WriteString(", ")
@@ -128,6 +126,9 @@ func (u *User) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("nickname=")
 	builder.WriteString(u.Nickname)
+	builder.WriteString(", ")
+	builder.WriteString("Email=")
+	builder.WriteString(u.Email)
 	builder.WriteByte(')')
 	return builder.String()
 }

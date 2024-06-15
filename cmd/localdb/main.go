@@ -34,7 +34,6 @@ func main() {
 
 	// DSNの構築
 	dataSourceName := mysqlUser + ":" + mysqlPassword + "@tcp(" + mysqlHost + ":" + mysqlPort + ")/" + mysqlDatabase + "?charset=utf8mb4&parseTime=True&loc=Local"
-	log.Println(dataSourceName)
 	// データベース接続設定
 	db, err := sql.Open(dialect.MySQL, dataSourceName)
 	if err != nil {

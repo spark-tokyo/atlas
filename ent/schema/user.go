@@ -13,10 +13,12 @@ type User struct {
 // Fields of the User.
 func (User) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("user_id").Comment("システムで使うユーザーID"),
+		// id は宣言しなくてもデフォルトで設定されるが、UUIDにしたいため宣言してオーバーライド
+		field.String("id").Comment("システムで使うユーザーID").Unique(),
 		field.Int("age").Comment("年齢"),
 		field.String("name").Comment("本名"),
-		field.String("nickname").Comment("ユーザーネーム").
+		field.String("nickname").Comment("ユーザーネーム"),
+		field.String("Email").Comment("メールアドレス").
 			Unique(),
 	}
 

@@ -44,7 +44,6 @@ func (u *UserUsecase) Get(ctx context.Context, id string) (*User, error) {
 	var userEntity *entity.User
 	if err := u.txManager.WitTx(ctx, func(ctx context.Context, tx *ent.Tx) error {
 		var err error
-		// TODO idを受け取るように
 		userEntity, err = u.userRepository.Get(ctx, tx, id)
 		if err != nil {
 			return err
@@ -55,8 +54,7 @@ func (u *UserUsecase) Get(ctx context.Context, id string) (*User, error) {
 		return nil, err
 	}
 
-	userUsecase := toUserUsecase(userEntity)
-	return userUsecase, nil
+	return toUserUsecase(userEntity), nil
 }
 
 func toUserUsecase(input *entity.User) *User {

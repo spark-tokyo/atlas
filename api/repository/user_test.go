@@ -50,13 +50,13 @@ func TestUser_Get(t *testing.T) {
 				args := Args{
 					tx:  tx,
 					ctx: ctx,
-					id:  "1",
+					id:  "userId_001",
 				}
 
 				entity := &entity.User{
-					Id:    "1",
-					Name:  "Name",
-					Email: "Email",
+					Id:    "userId_001",
+					Name:  "name",
+					Email: "email1",
 				}
 				returns := Returns{
 					user: entity,
@@ -82,7 +82,7 @@ func TestUser_Get(t *testing.T) {
 				args := Args{
 					tx:  tx,
 					ctx: ctx,
-					id:  "4",
+					id:  "user_004",
 				}
 
 				returns := Returns{

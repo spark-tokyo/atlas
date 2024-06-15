@@ -88,7 +88,7 @@ main=done
 docker=done
 db=done
 transaction=done
-migration=実装中
-error=未実装
+migration=done
+error=done
 config=調整中
 */

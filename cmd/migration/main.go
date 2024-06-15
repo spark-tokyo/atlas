@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
-	atlasMigrate "ariga.io/atlas/sql/migrate"
 	_ "ariga.io/atlas/sql/mysql"
+	"ariga.io/atlas/sql/sqltool"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql/schema"
 	_ "github.com/go-sql-driver/mysql"
@@ -40,24 +41,29 @@ func main() {
 	dataSourceName := fmt.Sprintf("mysql://%s:%s@%s:%s/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		mysqlUser, mysqlPassword, mysqlHost, mysqlPort, mysqlDatabase)
 
-	fmt.Println("Data Source Name:", dataSourceName)
-
 	// Create a local migration directory able to understand Atlas migration file format for replay.
-	dir, err := atlasMigrate.NewLocalDir("./migrations")
+	dir, err := sqltool.NewGolangMigrateDir("./migrations")
 	if err != nil {
 		log.Fatalf("failed creating atlas migration directory: %v", err)
 	}
 
 	// Migrate diff options.
 	opts := []schema.MigrateOption{
-		schema.WithDir(dir),                          // provide migration directory
+		schema.WithDir(dir), // provide migration directory
+		schema.WithIndent(" "),
 		schema.WithMigrationMode(schema.ModeInspect), // provide migration mode
 		schema.WithDialect(dialect.MySQL),            // Ent dialect to use
-		schema.WithFormatter(atlasMigrate.DefaultFormatter),
+		schema.WithFormatter(sqltool.GolangMigrateFormatter),
+		schema.WithDropColumn(false),
+		schema.WithDropIndex(true),
 	}
 
 	// アトラスがサポートするMySQLを使用してマイグレーションを生成する
-	err = migrate.Diff(context.Background(), dataSourceName, opts...)
+	err = migrate.NamedDiff(
+		context.Background(),
+		dataSourceName,
+		time.Now().Format("20060102150405"),
+		opts...)
 	if err != nil {
 		log.Fatalf("failed generating migration file: %v", err)
 	}
