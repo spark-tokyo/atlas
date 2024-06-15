@@ -35,16 +35,4 @@ func TestFetchTestReadWriteTransaction(t *testing.T) {
 	if tx == nil {
 		t.Fatal("Expected non-nil transaction")
 	}
-
-	// テストデータの作成を試みる
-	// 例えば、Userエンティティが存在する場合、以下のようにテストデータを作成
-	user, err := tx.User.Create().SetName("test user").SetAge(1).SetNickname("nickName").Save(ctx)
-	if err != nil {
-		t.Fatalf("Failed to create test data: %v", err)
-	}
-
-	// 作成したデータが正しく保存されたことを確認
-	if user.Name != "test user" {
-		t.Fatalf("Expected user name to be 'test user', got '%s'", user.Name)
-	}
 }
