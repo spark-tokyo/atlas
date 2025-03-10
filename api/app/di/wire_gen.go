@@ -7,6 +7,7 @@
 package di
 
 import (
+	"github.com/google/wire"
 	"github.com/spark-tokyo/atlas/api/app/di/provider"
 	"github.com/spark-tokyo/atlas/api/infra"
 	"github.com/spark-tokyo/atlas/api/repository"
@@ -15,7 +16,6 @@ import (
 	"github.com/spark-tokyo/atlas/config"
 	"github.com/spark-tokyo/atlas/router"
 	"github.com/spark-tokyo/atlas/tx"
-	"github.com/google/wire"
 )
 
 // Injectors from wire.go:

@@ -24,3 +24,8 @@ func (r *queryResolver) GetUser(ctx context.Context, id string) (*model.User, er
 	}
 	return toUserModel(usecase), nil
 }
+
+// ListUser is the resolver for the listUser field.
+func (r *queryResolver) ListUser(ctx context.Context) ([]*model.User, error) {
+	panic(fmt.Errorf("not implemented: ListUser - listUser"))
+}

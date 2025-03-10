@@ -4,6 +4,7 @@
 
 extend type Query {
   getUser(id: ID!): User!
+  listUser: [User]!
 }
 
 extend type Mutation {
