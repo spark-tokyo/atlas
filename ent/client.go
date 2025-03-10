@@ -9,11 +9,11 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/spark-tokyo/atlas/ent/migrate"
-
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
+
+	"github.com/spark-tokyo/atlas/ent/migrate"
 	"github.com/spark-tokyo/atlas/ent/pet"
 	"github.com/spark-tokyo/atlas/ent/user"
 )

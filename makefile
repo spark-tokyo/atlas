@@ -1,3 +1,10 @@
+## バージョンは以下に固定する
+# Go -> 1.22.0
+# gqlgen -> 0.17.46
+# wire -> 0.6.0
+# ent -> 0.13.1
+# mysql -> 8.0.33
+# docker -> 25.0.7
 
 # 必要なライブラリをインストールしましょう コマンド ⇨ make install
 install:
@@ -29,8 +36,10 @@ docker_res:
 	docker compose down
 	STAGE=local docker compose up -d --build
 
-con_db:
+connect_db:
 	docker-compose exec mysql mysql -uroot -p $(MYSQL_DATABASE)
+
+# INSERT INTO users (id, age, name, nickname, email) VALUES ('1', 25, 'John Doe', 'johnd', 'john.doe@example.com');
 
 # run apiで実行したときは http://127.0.0.1:8080/
 run_api:
@@ -44,10 +53,14 @@ docker_prune:
 setup_local_db:
 	go run -mod=mod ./cmd/localdb/main.go
 
-# TODO 細かい差分を検知してくれないので、修正必要
 # マイグレーションファイルを作成する
 # entのスキーマとデータベースの差分をマイグレーションファイルとして書き出す
 # Dockerを起動し、ローカルDBをセットアップした後に実装する
 create_migration_file:
 	go run -mod=mod ./cmd/migration/main.go asdff
+
+
+#  npm install -g npx
+# source ~/.nvm/nvm.sh
+#  nvm install 18.18.0
 

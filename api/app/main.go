@@ -90,5 +90,15 @@ db=done
 transaction=done
 migration=done
 error=done
-config=調整中
+
+configを環境ごとで分ける=yet
+単体テストのmock実装=yet
+Cloudを使ったDeploy=yet
+stripeの導入=yet
+タスク機能の実装=yet
+petの削除=yet
+dataloaderの導入=yet
+チャット機能の実装=yet
+cloud run jobs を使ったバッチ処理の実装=yet
+ログイン機能の実装=yet
 */
