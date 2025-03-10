@@ -16,6 +16,7 @@ import (
 	chiMiddleware "github.com/go-chi/chi/v5/middleware"
 	"github.com/google/uuid"
 	"github.com/rs/cors"
+	"github.com/vektah/gqlparser/v2/ast"
 
 	"github.com/spark-tokyo/atlas/api/resolver"
 	"github.com/spark-tokyo/atlas/config"
@@ -66,11 +67,11 @@ func NewRouter(
 	})
 
 	// クエリのキャッシュ時間を指定
-	srv.SetQueryCache(lru.New(1000))
+	srv.SetQueryCache(lru.New[*ast.QueryDocument](1000))
 	srv.Use(extension.Introspection{})
 	// serverにキャッシュがあれば、それを返却するように
 	srv.Use(extension.AutomaticPersistedQuery{
-		Cache: lru.New(100),
+		Cache: lru.New[string](1000),
 	})
 
 	/* webサーバーの構築 */
@@ -97,7 +98,7 @@ func NewRouter(
 	if IsOpenPlayGround(*config) {
 		// プレイグラウンドの設定
 		mux.Handle("/", playground.Handler("GraphQL PlayGround", "/query"))
-		mux.Handle("/altair", playground.AltairHandler("GraphQL PlayGround", "/query"))
+		mux.Handle("/altair", playground.AltairHandler("GraphQL PlayGround", "/query", nil))
 		mux.Handle("/apollo", playground.ApolloSandboxHandler("GraphQL PlayGround", "/query"))
 		log.Println("ローカル: URL=http://127.0.0.1:8080/ && GraphQL PlayGround=/ or /altair or /apollo")
 	} else {
