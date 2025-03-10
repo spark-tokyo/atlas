@@ -39,22 +39,22 @@ entgen:
 # dockerの起動
 docker_up:
 	docker network create atlas || true
-	STAGE=local docker compose up -d --build
+	STAGE=local docker-compose up -d --build
 
 # dockerの終了
 docker_down:
-	docker compose down
+	docker-compose down
 
 # docker内でmysqlの起動
 docker_mysql:
 	docker network create atlas || true
-	docker compose up -d --build mysql
+	docker-compose up -d --build mysql
 
 # dockerを再起動
 docker_res:
 	docker network create atlas || true
-	docker compose down
-	STAGE=local docker compose up -d --build
+	docker-compose down
+	STAGE=local docker-compose up -d --build
 
 
 # entの定義を使ってDocker内にDBをセットアップする(dockerを起動した後です)
